@@ -36,6 +36,8 @@ namespace southerd {
 
     public:
       LinkedList<T>();
+      ~LinkedList<T>();
+      LinkedList<T>* clear();
       LinkedList<T>* push(T);
       Node<T>* itemAt(int);
       LinkedList<T>* pushAt(int, T);
@@ -45,6 +47,30 @@ namespace southerd {
 
   template <typename T>
   LinkedList<T>::LinkedList() : len(0), head(0x00) {};
+
+  template <typename T>
+  LinkedList<T>::~LinkedList<T>(){
+    this->clear();
+  }
+
+  template <typename T>
+  LinkedList<T>* LinkedList<T>::clear(){
+    Node<T>* item = this->head;
+    Node<T>* del;
+
+    if(item){
+      while(item->next){
+        del = item;
+        item = item->next;
+        delete del;
+      }
+      delete item;
+    }
+    this->len = 0;
+    this->head = 0x00;
+
+    return this;
+  }
 
   template <typename T>
   int LinkedList<T>::length() const {
@@ -108,11 +134,13 @@ namespace southerd {
     out << rhs.length() << ": {";
 
     Node<U>* n = rhs.head;
-    out << ' ' << n->data;
-    while(n->next) {
-      n = n->next;
+    if(n){
       out << ' ' << n->data;
-    };
+      while(n->next) {
+        n = n->next;
+        out << ' ' << n->data;
+      };
+    }
     return out << " }";
   }
 }

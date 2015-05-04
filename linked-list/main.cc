@@ -9,6 +9,8 @@ inline void BuildOneTwoThree(southerd::LinkedList<int>* list){
 int main() {
   southerd::LinkedList<int> list;
 
+  std::cout << list << std::endl;
+
   BuildOneTwoThree(&list); // Start with {1, 2, 3}
   std::cout << list << std::endl;
   list.push(13); // Push 13 on the front, yielding {13, 1, 2, 3}
@@ -21,6 +23,10 @@ int main() {
 
   int top = list.pop();
   std::cout << "(" << top << ") " << list << std::endl;
+
+  list.clear();
+
+  std::cout << list << std::endl;
 
   return 0;
 }
