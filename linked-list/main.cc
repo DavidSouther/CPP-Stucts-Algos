@@ -7,7 +7,7 @@ inline void BuildOneTwoThree(southerd::LinkedList<int>* list){
 }
 
 int main() {
-  southerd::LinkedList<int> list;
+  southerd::LinkedList<int> list, sortedList;
 
   std::cout << list << std::endl;
 
@@ -20,6 +20,17 @@ int main() {
   list.pushAt(1, 42);
 
   std::cout << list << std::endl;
+
+  std::cout << "Iterating... ";
+  southerd::LinkedListIterator<int>* iter = list.iterator();
+  while(iter->hasNext()){
+    std::cout << iter->next() << ' ';
+  }
+  delete iter;
+  std::cout << std::endl;
+
+  sortedList = *(list.insertionSort());
+  std::cout << sortedList << std::endl;
 
   int top = list.pop();
   std::cout << "(" << top << ") " << list << std::endl;
