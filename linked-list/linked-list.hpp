@@ -87,7 +87,7 @@ namespace southerd {
   LinkedList<T>::LinkedList(LinkedList<T>& other) : len(0), head(0x00), tail(0x00) {
     LinkedListIterator<T> iter = *(other.iterator());
 #ifdef DEBUG
-    std::cout << "LinkedList<T>(&other) has iterator...";
+    std::cout << "DEBUG: LinkedList<T>(&other) has iterator" << std::endl;
 #endif
     while(iter.hasNext()){
       this->queue(iter.next());
@@ -97,7 +97,7 @@ namespace southerd {
   template <typename T>
   LinkedList<T>::~LinkedList<T>(){
 #ifdef DEBUG
-    std::cout << "Deleting LinkedList<T>" << std::endl;
+    std::cout << "DEBUG: Deleting LinkedList<T>" << std::endl;
 #endif
     this->clear();
   }
@@ -105,12 +105,15 @@ namespace southerd {
   template <typename T>
   LinkedList<T>* LinkedList<T>::clear(){
 #ifdef DEBUG
-    std::cout << "Clearing LinkedList<T>" << std::endl;
+    std::cout << "DEBUG: Clearing LinkedList<T>" << std::endl;
 #endif
     Node<T>* item = this->head;
     Node<T>* del;
 
     if(item){
+#ifdef DEBUG
+    std::cout << "DEBUG: Starting at " << item << std::endl;
+#endif
       while(item->next){
         del = item;
         item = item->next;
@@ -137,7 +140,7 @@ namespace southerd {
     }
 
 #ifdef DEBUG
-    std::cout << "Head is " << this->head->data << "; next is " << this->head->next << std::endl;
+    std::cout << "DEBUG: Head is " << this->head->data << "; next is " << this->head->next << std::endl;
 #endif
 
     this->len += 1;
@@ -146,6 +149,9 @@ namespace southerd {
 
   template <typename T>
   LinkedList<T>* LinkedList<T>::queue(T data){
+#ifdef DEBUG
+    std::cout << "Tail is " << this->tail << "; queueing " << data << std::endl;
+#endif
     Node<T>* tail = new Node<T>(data, 0x00);
     if(this->tail){
       this->tail->next = tail;
