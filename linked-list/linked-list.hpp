@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <assert.h>
+#include <stdlib.h>
 
 namespace southerd {
   template <typename T>
@@ -69,12 +70,14 @@ namespace southerd {
       ~LinkedList<T>();
       LinkedList<T>* clear();
       LinkedList<T>* push(T);
+      LinkedList<T>* pushAll(T*);
       LinkedList<T>* queue(T);
       Node<T>* itemAt(int);
       Node<T>* itemBefore(T);
       LinkedList<T>* pushAt(int, T);
       LinkedList<T>* sortedInsert(T);
       LinkedList<T>* insertionSort();
+      LinkedList<T>** split();
       T pop();
       int length() const;
       LinkedListIterator<T>* iterator() const;
@@ -146,6 +149,18 @@ namespace southerd {
     this->len += 1;
     return this;
   };
+
+  template <typename T>
+  LinkedList<T>* LinkedList<T>::pushAll(T* data){
+    T datum;
+    while((datum = *data++)){
+#ifdef DEBUG
+      std::cout << "DEBUG: Adding " << datum << std::endl;
+#endif
+      this->queue(datum);
+    }
+    return this;
+  }
 
   template <typename T>
   LinkedList<T>* LinkedList<T>::queue(T data){
@@ -254,6 +269,34 @@ namespace southerd {
       temp->sortedInsert(iter->next());
     }
     return temp;
+  };
+
+  template <typename T>
+  LinkedList<T>** LinkedList<T>::split(){
+    LinkedList<T>** pair = (LinkedList<T>**)malloc(2 * sizeof(LinkedList<T>*));
+    pair[0] = new LinkedList<T>();
+    pair[1] = new LinkedList<T>();
+
+    Node<T>* fast = this->head;
+    Node<T>* slow = this->head;
+#ifdef DEBUG
+    std::cout << "DEBUG: Splitting List" << std::endl;
+#endif
+
+    while(fast){
+      fast = fast->next;
+      if(fast){
+        fast = fast->next;
+      }
+      pair[0]->queue(slow->data);
+      slow = slow->next;
+    }
+    while(slow){
+      pair[1]->queue(slow->data);
+      slow = slow->next;
+    }
+
+    return pair;
   };
 
   template <typename T>

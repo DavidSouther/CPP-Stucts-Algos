@@ -4,7 +4,24 @@
 
 inline void BuildOneTwoThree(southerd::LinkedList<int>* list){
   list->push(3)->push(2)->push(1);
-}
+};
+
+southerd::LinkedList<int>* BuildOneTwoThree(){
+  southerd::LinkedList<int>* list = new southerd::LinkedList<int>();
+  BuildOneTwoThree(list);
+  return list;
+};
+
+void SplitAndPrint(southerd::LinkedList<int>* list){
+  southerd::LinkedList<int>** splits = list->split();
+  southerd::LinkedList<int>* a = splits[0];
+  southerd::LinkedList<int>* b = splits[1];
+  std::cout << *a << std::endl;
+  std::cout << *b << std::endl;
+  delete a;
+  delete b;
+  delete splits;
+};
 
 int main() {
   southerd::LinkedList<int> list, sortedList;
@@ -38,6 +55,18 @@ int main() {
   list.clear();
 
   std::cout << list << std::endl;
+
+  SplitAndPrint(&list);
+  int one[] = {1, 0x00};
+  list.pushAll(one);
+  std::cout << list << std::endl;
+  SplitAndPrint(&list);
+  int two[] = {1, 2, 0x00};
+  list.clear()->pushAll(two);
+  SplitAndPrint(&list);
+  SplitAndPrint(BuildOneTwoThree());
+  SplitAndPrint(&sortedList);
+
 
   return 0;
 }
