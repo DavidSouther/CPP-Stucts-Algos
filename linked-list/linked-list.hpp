@@ -2,6 +2,7 @@
 #define SOUTHERD_LINKED_LIST_H_
 
 #include <iostream>
+#include <assert.h>
 
 namespace southerd {
   template <typename T>
@@ -38,6 +39,7 @@ namespace southerd {
       LinkedList<T>* push(T);
       Node<T>* itemAt(int);
       LinkedList<T>* pushAt(int, T);
+      T pop();
       int length() const;
   };
 
@@ -89,6 +91,17 @@ namespace southerd {
     this->len += 1;
     return this;
   };
+
+  template <typename T>
+  T LinkedList<T>::pop(){
+    assert(this->head);
+    Node<T>* head = this->head;
+    this->head = head->next;
+    T ret = head->data;
+    delete head;
+    this->len -= 1;
+    return ret;
+  }
 
   template <class U>
   std::ostream& operator<<(std::ostream& out, const LinkedList<U> &rhs){

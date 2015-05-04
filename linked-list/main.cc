@@ -19,5 +19,8 @@ int main() {
 
   std::cout << list << std::endl;
 
+  int top = list.pop();
+  std::cout << "(" << top << ") " << list << std::endl;
+
   return 0;
 }
